@@ -39,27 +39,28 @@
                 <div class="page-header">
                     <h1>Ask Question</h1>
                 </div>
-                <form class="ask-form">
-                    <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" placeholder="Enter your question title...">
-                        <div class="form-help">Make your title clear and descriptive</div>
-                    </div>
+                <div class="ask-form">
+                    <form method="POST">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" placeholder="Enter your question title..." required>
+                            <div class="form-help">Make your title clear and descriptive</div>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="text">Text</label>
-                        <textarea placeholder="Enter your question details..." rows="15"></textarea>
-                        <div class="form-help">Provide all the information someone would need to answer your question</div>
-                    </div>
+                        <div class="form-group">
+                            <label for="text">Text</label>
+                            <textarea placeholder="Enter your question details..." id="text" rows="15"></textarea>
+                            <div class="form-help">Provide all the information someone would need to answer your question</div>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="tags">Tags</label>
-                        <input type="text" id="tags" placeholder="Enter tags separated by commas...">
-                        <div class="form-help">Add up to 5 tags to describe what your question is about</div>
-                    </div>
-
+                        <div class="form-group">
+                            <label for="tags">Tags</label>
+                            <input type="text" id="tags" placeholder="Enter tags separated by commas...">
+                            <div class="form-help">Add up to 5 tags to describe what your question is about</div>
+                        </div>
+                    </form>
                     <button type="submit" class="btn btn-primary">Ask Question</button>
-                </form>
+                </div>
             </div>
 
             <aside class="sidebar">
@@ -85,5 +86,32 @@
             </aside>
         </div>
     </main>
+        <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="ask.html">Ask Question</a></li>
+                        <li><a href="#">Popular Tags</a></li>
+                        <li><a href="#">Best Members</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AskPupkin </p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

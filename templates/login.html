@@ -33,15 +33,15 @@
                 <div class="page-header">
                     <h1>Log In</h1>
                 </div>
-                <form>
+                <form method="POST">
                     <div class="form-group">
                         <label for="login">Login</label>
-                        <input type="text" placeholder="Enter your login...">
+                        <input type="text" id="login" placeholder="Enter your login..." required>
                     </div>
 
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" placeholder="Enter your password...">
+                        <input type="password" id="password" placeholder="Enter your password..." required>
                     </div>
 
                     <div class="form-errors">
@@ -52,15 +52,40 @@
                             This account has been suspended
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-full">Log In</button>
-                    
-                    <div class="auth-links">
-                        <a href="signup.html">create new account</a>
-                    </div>
                 </form>
+                <button type="submit" class="btn btn-full">Log In</button>
+                <div class="auth-links">
+                    <a href="signup.html">create new account</a>
+                </div>
             </div>
         </div>
     </main>
+        <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="ask.html">Ask Question</a></li>
+                        <li><a href="#">Popular Tags</a></li>
+                        <li><a href="#">Best Members</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AskPupkin </p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

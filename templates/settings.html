@@ -38,37 +38,39 @@
                 <div class="page-header">
                     <h1>Settings</h1>
                 </div>
-                <form class="settings-form">
-                    <div class="avatar-upload">
-                        <div class="avatar-large"></div>
-                        <div class="upload-controls">
-                            <input type="file">
-                            <button type="button" class="btn btn-secondary">Upload New Avatar</button>
-                            <button type="button" class="btn btn-outline">Remove Avatar</button>
+                <div class="settings-form">
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="avatar-upload">
+                            <div class="avatar-large"></div>
+                            <div class="upload-controls">
+                                <input type="file">
+                                <button type="button" class="btn btn-secondary">Upload New Avatar</button>
+                                <button type="button" class="btn btn-outline">Remove Avatar</button>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" value="dr.pepper@example.com">
-                    </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" value="dr.pepper@example.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                        </div>
 
-                    <div class="form-group">
-                        <label>Nickname</label>
-                        <input type="text" value="Dr. Pepper">
-                    </div>
+                        <div class="form-group">
+                            <label for="nickname">Nickname</label>
+                            <input type="text" id="nickname" value="Dr. Pepper">
+                        </div>
 
-                    <div class="form-group">
-                        <label>New Password</label>
-                        <input type="password" placeholder="Enter new password...">
-                        <div class="form-help">Leave blank to keep current password</div>
-                    </div>
+                        <div class="form-group">
+                            <label for="password">New Password</label>
+                            <input type="password" id="password" placeholder="Enter new password..." minlength="8">
+                            <div class="form-help">Leave blank to keep current password</div>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Repeat New Password</label>
-                        <input type="password" placeholder="Repeat new password...">
-                    </div>
+                        <div class="form-group">
+                            <label for="password_r">Repeat New Password</label>
+                            <input type="password" id="password_r" placeholder="Repeat new password...">
+                        </div>
 
+                    </form>
                     <div class="form-errors">
                         <div class="error-message">
                             Email is already in use
@@ -82,7 +84,7 @@
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                         <button type="button" class="btn btn-secondary">Cancel</button>
                     </div>
-                </form>
+                </div>
             </div>
 
             <aside class="sidebar">
@@ -108,5 +110,32 @@
             </aside>
         </div>
     </main>
+        <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="ask.html">Ask Question</a></li>
+                        <li><a href="#">Popular Tags</a></li>
+                        <li><a href="#">Best Members</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AskPupkin </p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

@@ -33,31 +33,31 @@
                 <div class="page-header">
                     <h1>Register</h1>
                 </div>
-                <form>
+                <form method="POST" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" placeholder="Enter your email...">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Enter your email..." required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
                     </div>
 
                     <div class="form-group">
-                        <label>Nickname</label>
-                        <input type="text" placeholder="Choose your nickname...">
+                        <label for="nickname">Nickname</label>
+                        <input type="text" id="nickname" placeholder="Choose your nickname..." required>
                     </div>
 
                     <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" placeholder="Create a password...">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Create a password..." required minlength="8">
                         <div class="form-help">Password must be at least 8 characters long</div>
                     </div>
 
                     <div class="form-group">
-                        <label>Repeat Password</label>
-                        <input type="password" placeholder="Repeat your password...">
+                        <label for="password_r">Repeat Password</label>
+                        <input type="password" id="password_r" placeholder="Repeat your password..." required>
                     </div>
 
                     <div class="form-group">
-                        <label>Upload Avatar</label>
-                        <input type="file">
+                        <label for="avatar">Upload Avatar</label>
+                        <input type="file" id="avatar">
                         <div class="form-help">Optional: upload your profile picture</div>
                     </div>
 
@@ -72,15 +72,40 @@
                             Passwords do not match
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-primary btn-full">Register</button>
-                    
-                    <div class="auth-links">
-                        <a href="login.html">already have an account?</a>
-                    </div>
                 </form>
+                <button type="submit" class="btn btn-primary btn-full">Register</button>
+                <div class="auth-links">
+                    <a href="login.html">already have an account?</a>
+                </div>
             </div>
         </div>
     </main>
+        <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="ask.html">Ask Question</a></li>
+                        <li><a href="#">Popular Tags</a></li>
+                        <li><a href="#">Best Members</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AskPupkin </p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

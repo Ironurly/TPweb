@@ -72,8 +72,8 @@
                                 <button class="like-btn">↓</button>
                             </div>
                             <div>
-                                <input type="checkbox" checked>
-                                <label>Correct!</label>
+                                <input type="checkbox" id="is_answer_correct" checked>
+                                <label for="is_answer_correct">Correct!</label>
                             </div>
                         </div>
                         <div>
@@ -95,8 +95,8 @@
                                 <button class="like-btn">↓</button>
                             </div>
                             <div>
-                                <input type="checkbox">
-                                <label>Correct!</label>
+                                <input type="checkbox" id="is_answer_correct">
+                                <label for="is_answer_correct">Correct!</label>
                             </div>
                         </div>
                         <div>
@@ -112,12 +112,12 @@
 
                 <div class="answer-form">
                     <h3>Your Answer</h3>
-                    <form>
+                    <form method="POST">
                         <div>
                             <textarea placeholder="Enter your answer here..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Answer</button>
                     </form>
+                    <button type="submit" class="btn btn-primary">Answer</button>
                 </div>
 
                 <div class="pagination">
@@ -152,5 +152,32 @@
             </aside>
         </div>
     </main>
+        <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="ask.html">Ask Question</a></li>
+                        <li><a href="#">Popular Tags</a></li>
+                        <li><a href="#">Best Members</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AskPupkin </p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
