@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Questions - AskPupkin</title>
+    <link rel="stylesheet" href="{% static 'webproject/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'webproject/css/index.css' %}">
+</head>
+<header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">AskPupkin</a>
+                </div>
+                <div class="search">
+                    <input type="text" placeholder="Search...">
+                </div>
+                
+                <div class="user-menu">
+                    <a href="ask.html" class="btn btn-primary">Ask Question</a>
+                    <div class="user-auth">
+                        <div class="avatar-small"></div>
+                        <span >Dr. Pepper</span>
+                        <div class="dropdown">
+                            <a href="settings.html">Settings</a>
+                            <a href="login.html">Log out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</header>
+{% block content %}{% endblock content %}
+</html>
