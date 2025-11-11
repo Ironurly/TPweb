@@ -288,9 +288,12 @@ body {
     background: white;
     border-radius: 4px;
     cursor: pointer;
+    text-decoration: none;
+    color: #333;
 }
 
 .page-btn.active {
+    pointer-events: none;
     background: #667eea;
     color: white;
     border-color: #667eea;
@@ -307,4 +310,46 @@ body {
 .error-message {
     color: #721c24;
     margin-bottom: 0.25rem;
+}
+/* Footer */
+.footer {
+    background: #2c3e50;
+    color: #ecf0f1;
+    margin-top: 4rem;
+    padding: 2rem 0 1rem;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-section h4 {
+    color: #3498db;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.footer-section a {
+    color: #bdc3c7;
+    text-decoration: none;
+}
+
+.footer-section a:hover {
+    color: #3498db;
+}
+
+.footer-bottom {
+    border-top: 1px solid #34495e;
+    text-align: center;
+    color: #95a5a6;
+    font-size: 0.9rem;
 }

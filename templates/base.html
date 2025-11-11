@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+        <title>Главная страница</title>
+    {% endblock title %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ask.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <link rel="stylesheet" href="{% static 'css/question.css' %}">
+    <link rel="stylesheet" href="{% static 'css/settings.css' %}">
+</head>
+<header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="{% url 'webproject:index_question_view' %}">AskPupkin</a>
+                </div>
+                <div class="search">
+                    <input type="text" placeholder="Search...">
+                </div>
+                
+                <div class="user-menu">
+                    <a class="btn btn-primary" href={% url "webproject:ask_question"%}>Ask Question</a>
+                    <div class="user-auth">
+                        <div class="avatar-small"></div>
+                        <span >Dr. Pepper</span>
+                        <div class="dropdown">
+                            <a href="{% url 'webproject:settings'%}">Settings</a>
+                            <a href="{% url "webproject:login"%}">Log out</a> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</header>
+<body>
+    <main class="main container">
+        <div class="content-wrapper">
+            {% block content %}{% endblock content %}
+            <aside class="sidebar">
+                <div class="sidebar-block">
+                    <h3>Popular Tags</h3>
+                    <div class="tags">
+                        <a href="{% url 'webproject:tag' tag_name="perl" %}" class="tag">perl</a>
+                        <a href="{% url 'webproject:tag' tag_name="python" %}" class="tag tag-popular">python</a>
+                        <a href="{% url 'webproject:tag' tag_name="TechnoPark" %}" class="tag">TechnoPark</a>
+                        <a href="{% url 'webproject:tag' tag_name="MySQL" %}" class="tag tag-popular">MySQL</a>
+                        <a href="{% url 'webproject:tag' tag_name="django" %}" class="tag">django</a>
+                    </div>
+                </div>
+
+                <div class="sidebar-block">
+                    <h3>Best Members</h3>
+                    <ul class="members-list">
+                        <li><a href="#">Mr. Freeman</a></li>
+                        <li><a href="#">Dr. House</a></li>
+                        <li><a href="#">Bender</a></li>
+                        <li><a href="#">Queen Victoria</a></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+</body>
+<footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="{% url 'webproject:index_question_view' %}">Home</a></li>
+                        <li><a href="{% url 'webproject:ask_question' %}">Ask Question</a></li>
+                        <li><a href="#">Popular Tags</a></li>
+                        <li><a href="#">Best Members</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Help</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AskPupkin </p>
+            </div>
+        </div>
+</footer>
+</html>

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Tag</title>
+{% endblock title %}
+{% block content %}
+<div class="content">
+    <div class="page-header">
+        <h1>Questions tagged [{{ tag_name }}]</h1>
+    </div>
+    {% for question in object_list %}
+        <div class="question">
+            <div class="question-left">
+                <div class="avatar-medium"></div>
+                <div>
+                    <button class="like-btn">↑</button>
+                    <span class="likes-count">42</span>
+                    <button class="like-btn">↓</button>
+                </div>
+            </div>
+            <div class="question-right">
+                <h3 class="question-title">
+                    <a href="{% url 'webproject:question_detail' question.id %}">How to learn Python in 2024?</a>
+                </h3>
+                <p class="question-text">Looking for the best resources and learning path for Python programming...</p>
+                <div class="question-meta">
+                    <a href="{% url 'webproject:question_detail' question.id %}" class="answers-count">answers (12)</a>
+                    <div class="tags">
+                        Tags:
+                        <a href="{% url 'webproject:tag' tag_name="python" %}" class="tag">python</a>
+                        <a href="{% url 'webproject:tag' tag_name="learning" %}" class="tag">learning</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% include "paginator.html" %}
+</div>
+{% endblock %}

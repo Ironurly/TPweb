@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Question</title>
+{% endblock title %}
+{% block content %}
+<div class="content">
+    <div class="question-full">
+        <div>
+            <div class="avatar-large"></div>
+            <div>
+                <button class="like-btn">↑</button>
+                <span class="likes-count">15</span>
+                <button class="like-btn">↓</button>
+            </div>
+        </div>
+        <div>
+            <h1 class="question-title">How to build a moon park?</h1>
+            <div class="question-text">
+                <p>Guys, i have trouble with a moon park. Can't find the black-jack and girls. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+                <p>Please help me solve this problem! I've tried everything but nothing works.</p>
+            </div>
+            <div>
+                <div class="tags">
+                    Tags:
+                    <a href="{% url 'webproject:tag' tag_name="black-jack" %}" class="tag">black-jack</a>
+                    <a href="{% url 'webproject:tag' tag_name="bender" %}" class="tag">bender</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="answers-section">
+        <h2>Answers</h2>
+        {% for answer in object_list %}
+        <div class="answer">
+            <div class="answer-left">
+                <div class="avatar-medium"></div>
+                <div>
+                    <button class="like-btn">↑</button>
+                    <span class="likes-count">8</span>
+                    <button class="like-btn">↓</button>
+                </div>
+                <div>
+                    <input type="checkbox" id="is_answer_correct" checked>
+                    <label for="is_answer_correct">Correct!</label>
+                </div>
+            </div>
+            <div>
+                <div class="answer-text">
+                    <p>{{ answer.text }}</p>
+                </div>
+                <div class="answer-meta">
+                    Answered by <strong>Mr. Freeman</strong> on 2024-01-15
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="answer-form">
+        <h3>Your Answer</h3>
+        <form method="POST">
+            <div>
+                <textarea placeholder="Enter your answer here..."></textarea>
+            </div>
+        </form>
+        <button type="submit" class="btn btn-primary">Answer</button>
+    </div>
+    {% include "paginator.html" %}
+</div>
+{% endblock %}

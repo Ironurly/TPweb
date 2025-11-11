@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Список вопросов</title>
+{% endblock title %}
+{% block content %}
+<div class="content">
+    <div class="page-header">
+        <h1>New Questions</h1>
+        <a href="#" class="hot-link">Hot Questions</a>
+    </div>
+
+    <div>
+        {% for question in object_list %}
+        <div class="question" data-id="{{ question.id }}">
+            <div class="question-left">
+                <div class="avatar-medium"></div>
+                <div>
+                    <button class="like-btn">↑</button>
+                    <span class="likes-count">{{ question.likes }}</span>
+                    <button class="like-btn">↓</button>
+                </div>
+            </div>
+            <div class="question-right">
+                <h3 class="question-title">
+                    <a href="{% url "webproject:question_detail" question.id%}">{{ question.text }}</a>
+                </h3>
+                <p class="question-text">{{ question.description }}</p>
+                <div class="question-meta">
+                    <a href="{% url "webproject:question_detail" question.id%}" class="answers-count">answers (3)</a>
+                    <div class="tags">
+                        Tags:
+                        {% for tag in question.tags %}
+                            <a href="{% url 'webproject:tag' tag_name=tag %}" class="tag">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% include "paginator.html" %}
+</div>
+{% endblock %}
