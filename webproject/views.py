@@ -1,53 +1,90 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic import TemplateView
 from rest_framework.generics import RetrieveAPIView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from webproject.managers import QuestionManager
+from webproject.models import Question, Tag
 # Create your views here.
 
-def index_view(request):
-    questions = []
-    for i in range(0, 50):
-        questions.append({
-            "id": i,
-            "text": f"Question {i}",
-            "description": "Guys, i have trouble with a moon park. Can't find the black-jack...",
-            "tags": ["black-jack", "bender"],
-            "likes": i+2
-        })
-    
-    page_number = request.GET.get("page", 1)
-    paginator = Paginator(questions, per_page=5)
-    
-    try:
-        page_obj = paginator.page(page_number)
-    except PageNotAnInteger:
-        page_obj = paginator.page(1)
-    except EmptyPage:
-        page_obj = paginator.page(paginator.num_pages)
+manager = QuestionManager()
 
-    return render(request, "webproject/index.html", {
-        "object_list": page_obj.object_list,
-        "page_obj": page_obj,
-        "paginator": paginator
-    })
-ANSWERS = [
-    {
-        "id": 1,
-        "text": "Emmmmm...."
-    },
-    {
-        "id": 2,
-        "text": "Emmmmm...."
-    },
-]
+class IndexQuestionView(TemplateView):
+    template_name = "webproject/index.html"
+    
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        page_number = self.request.GET.get("page", 1)
+
+        questions = manager.get_new_questions()
+        paginator = Paginator(questions, per_page=5)
+
+        try:
+            page_obj = paginator.page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
+        
+        context.update({
+            "object_list": page_obj.object_list,
+            "page_obj": page_obj,
+            "paginator": paginator,
+        })
+        context['tags'] = Tag.objects.all()[:12]
+        context['meta'] = {
+            'page_name':'main',
+        }
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        return super(IndexQuestionView, self).dispatch(request, *args, **kwargs)
+
+class HotQuestionView(TemplateView):
+    template_name = "webproject/index.html"
+    
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        page_number = self.request.GET.get("page", 1)
+
+        questions = manager.get_hot_questions()
+        paginator = Paginator(questions, per_page=5)
+
+        try:
+            page_obj = paginator.page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            page_obj = paginator.page(paginator.num_pages)
+        
+        context.update({
+            "object_list": page_obj.object_list,
+            "page_obj": page_obj,
+            "paginator": paginator,
+        })
+        context['tags'] = Tag.objects.all()[:12]
+        context['meta'] = {
+            'page_name':'hot',
+        }
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        return super(HotQuestionView, self).dispatch(request, *args, **kwargs)
+
+
 class DetailView(TemplateView):
     template_name = "webproject/question.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        
+        question = get_object_or_404(Question, pk=self.kwargs.get("pk"))
+        comments = question.comments.filter(is_active=True).order_by('-created_at')
+        
         page_number = self.request.GET.get("page", 1)
-        paginator = Paginator(ANSWERS, per_page=5)
+        paginator = Paginator(comments, per_page=5)
         try:
             page_obj = paginator.page(page_number)
         except PageNotAnInteger:
@@ -56,18 +93,30 @@ class DetailView(TemplateView):
             page_obj = paginator.page(paginator.num_pages)
 
         context.update({
+            "question": question,
             "object_list": page_obj.object_list,
             "page_obj": page_obj,
             "paginator": paginator
         })
+        context['tags'] = Tag.objects.all()[:12]
         return context
 
 
 class AskView(TemplateView):
     template_name = "webproject/ask.html"
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['tags'] = Tag.objects.all()[:12]
+        return context
 
 class LoginView(TemplateView):
     template_name = "webproject/login.html"
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['tags'] = Tag.objects.all()[:12]
+        return context
 
 class SettingsView(TemplateView):
     template_name = "webproject/settings.html"
@@ -78,6 +127,7 @@ class SettingsView(TemplateView):
         
         context['errors'] = errors if errors else []
         context['form_data'] = form_data
+        context['tags'] = Tag.objects.all()[:12]
         return context
 
     def post(self, request, *args, **kwargs):
@@ -134,6 +184,7 @@ class SignUpView(TemplateView):
         
         context['errors'] = errors if errors else []
         context['form_data'] = form_data
+        context['tags'] = Tag.objects.all()[:12]
         return context
 
     def post(self, request, *args, **kwargs):
@@ -184,19 +235,13 @@ class TagView(TemplateView):
     template_name = "webproject/tag.html"
     
     def get_context_data(self, **kwargs):
+
         context = super().get_context_data(**kwargs)
-        
+        page_number = self.request.GET.get("page", 1)
         tag_name = self.kwargs.get('tag_name')
         
-        tags = []
-        for i in range(0, 20):
-            tags.append({
-                "id": i,
-                "text": "Tag",
-            })
-        
-        page_number = self.request.GET.get("page", 1)
-        paginator = Paginator(tags, per_page=5)
+        questions = manager.get_tagged_questions(tag_name)
+        paginator = Paginator(questions, per_page=5)
         
         try:
             page_obj = paginator.page(page_number)
@@ -211,5 +256,5 @@ class TagView(TemplateView):
             "paginator": paginator,
             "tag_name": tag_name
         })
-        
+        context['tags'] = Tag.objects.all()[:12]
         return context

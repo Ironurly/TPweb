@@ -9,21 +9,23 @@
             <div class="avatar-large"></div>
             <div>
                 <button class="like-btn">↑</button>
-                <span class="likes-count">15</span>
+                <span class="likes-count">{{ question.likes }}</span>
                 <button class="like-btn">↓</button>
             </div>
         </div>
         <div>
-            <h1 class="question-title">How to build a moon park?</h1>
+            <h1 class="question-title">{{ question.title }}</h1>
             <div class="question-text">
-                <p>Guys, i have trouble with a moon park. Can't find the black-jack and girls. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-                <p>Please help me solve this problem! I've tried everything but nothing works.</p>
+                <p>{{ question.body }}</p>
             </div>
             <div>
                 <div class="tags">
                     Tags:
-                    <a href="{% url 'webproject:tag' tag_name="black-jack" %}" class="tag">black-jack</a>
-                    <a href="{% url 'webproject:tag' tag_name="bender" %}" class="tag">bender</a>
+                    {% for tag in question.tags.all %}
+                        <a href="{% url 'webproject:tag' tag_name=tag.title %}" class="tag">{{ tag.title }}</a>
+                    {% empty %}
+                        <span class="no-tags">No tags</span>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -37,7 +39,7 @@
                 <div class="avatar-medium"></div>
                 <div>
                     <button class="like-btn">↑</button>
-                    <span class="likes-count">8</span>
+                    <span class="likes-count">{{ answer.likes }}</span>
                     <button class="like-btn">↓</button>
                 </div>
                 <div>
@@ -47,10 +49,10 @@
             </div>
             <div>
                 <div class="answer-text">
-                    <p>{{ answer.text }}</p>
+                    <p>{{ answer.body }}</p>
                 </div>
                 <div class="answer-meta">
-                    Answered by <strong>Mr. Freeman</strong> on 2024-01-15
+                    Answered by <strong>{{ answer.author_id }}</strong> on 2024-01-15
                 </div>
             </div>
         </div>
@@ -63,8 +65,8 @@
             <div>
                 <textarea placeholder="Enter your answer here..."></textarea>
             </div>
+            <button type="submit" class="btn btn-primary">Answer</button>
         </form>
-        <button type="submit" class="btn btn-primary">Answer</button>
     </div>
     {% include "paginator.html" %}
 </div>

@@ -46,11 +46,9 @@
                 <div class="sidebar-block">
                     <h3>Popular Tags</h3>
                     <div class="tags">
-                        <a href="{% url 'webproject:tag' tag_name="perl" %}" class="tag">perl</a>
-                        <a href="{% url 'webproject:tag' tag_name="python" %}" class="tag tag-popular">python</a>
-                        <a href="{% url 'webproject:tag' tag_name="TechnoPark" %}" class="tag">TechnoPark</a>
-                        <a href="{% url 'webproject:tag' tag_name="MySQL" %}" class="tag tag-popular">MySQL</a>
-                        <a href="{% url 'webproject:tag' tag_name="django" %}" class="tag">django</a>
+                    {%for t in tags%}
+                        <a href="{% url 'webproject:tag' tag_name=t.title %}" class="tag">{{ t.title }}</a>
+                    {% endfor %}
                     </div>
                 </div>
 
