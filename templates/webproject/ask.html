@@ -9,6 +9,7 @@
     </div>
     <div class="ask-form">
         <form method="POST">
+            {% csrf_token %}
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" id="title" placeholder="Enter your question title..." required>

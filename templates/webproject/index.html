@@ -16,7 +16,6 @@
     </div>
     <div>
         {% for question in object_list %}
-        {% if question.is_active %}
         <div class="question" data-id="{{ question.id }}">
             <div class="question-left">
                 <div class="avatar-medium"></div>
@@ -44,7 +43,6 @@
                 </div>
             </div>
         </div>
-        {% endif %}
         {% endfor %}
     </div>
     {% include "paginator.html" %}

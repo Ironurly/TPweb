@@ -33,17 +33,17 @@ class Question(models.Model):
     
     author_id = models.ForeignKey(User, verbose_name="Автор вопроса", on_delete=models.SET_NULL, null=True)
     
-    created_at =models.DateTimeField(verbose_name="Время создания", auto_now_add=True)
+    created_at = models.DateTimeField(verbose_name="Время создания", auto_now_add=True)
     
     is_active = models.BooleanField(verbose_name="Активно", help_text="Если True - отображается", default=True)
 
     def answer(self):
         self.answers += 1
-        self.save()
+        self.save(update_fields=["answers"])
 
     def like(self, val):
         self.likes += val
-        self.save()
+        self.save(update_fields=["likes"])
 
     class Meta:
         verbose_name = 'Вопрос'
@@ -65,13 +65,14 @@ class Comment(models.Model):
     question_id = models.ForeignKey(Question, verbose_name="Вопрос", on_delete=models.CASCADE, related_name="comments")
     is_active = models.BooleanField(verbose_name="Активно", help_text="Если True - отображается", default=True)
     
-    def save(self, *args, **kwargs):
-        self.question_id.answer()
-        super().save(*args, **kwargs)
+    # Потом когда реализовавывать буду... от туда их вызывать буду
+    # def save(self, *args, **kwargs):
+    #     self.question_id.answer()
+    #     super().save(*args, **kwargs)
 
     def like(self, val):
         self.likes += val
-        self.save()
+        self.save(update_fields=["likes"])
     
     class Meta:
         verbose_name = 'Комментарий'
@@ -87,14 +88,15 @@ class QuestionLikes(models.Model):
     question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     
-    def save(self, *args, **kwargs):
+    # SAME
+    # def save(self, *args, **kwargs):
         
-        if self.status == True:
-            self.question_id.like(1)
-        elif self.status == False:
-            self.question_id.like(-1)
+    #     if self.status == True:
+    #         self.question_id.like(1)
+    #     elif self.status == False:
+    #         self.question_id.like(-1)
         
-        super().save(*args, **kwargs)
+    #     super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Лайк Вопроса'
@@ -111,14 +113,15 @@ class CommentLikes(models.Model):
     comment_id = models.ForeignKey(Comment, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     
-    def save(self, *args, **kwargs):
+    # SAME
+    # def save(self, *args, **kwargs):
         
-        if self.status == True:
-            self.comment_id.like(1)
-        elif self.status == False:
-            self.comment_id.like(-1)
+    #     if self.status == True:
+    #         self.comment_id.like(1)
+    #     elif self.status == False:
+    #         self.comment_id.like(-1)
         
-        super().save(*args, **kwargs)
+    #     super().save(*args, **kwargs)
     
     class Meta:
         verbose_name = 'Лайк Комментария'
