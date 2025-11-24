@@ -1,0 +1,9 @@
+from django.urls import re_path
+from users.views import *
+
+app_name = "users"
+urlpatterns = [
+    re_path(r'^login/$', LoginView.as_view(), name="login"),
+    re_path(r'^signup/$', SignUpView.as_view(), name="signup"),
+    re_path(r'^settings/$', SettingsView.as_view(), name="settings")
+]

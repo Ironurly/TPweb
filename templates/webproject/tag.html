@@ -9,21 +9,14 @@
     </div>
     {% for question in object_list %}
         <div class="question">
-            <div class="question-left">
-                <div class="avatar-medium"></div>
-                <div>
-                    <button class="like-btn">↑</button>
-                    <span class="likes-count">{{ question.likes }}</span>
-                    <button class="like-btn">↓</button>
-                </div>
-            </div>
+            {% include "question_item.html" %}
             <div class="question-right">
                 <h3 class="question-title">
                     <a href="{% url 'webproject:question_detail' question.id %}">{{ question.title }}</a>
                 </h3>
                 <p class="question-text">{{ question.body }}</p>
                 <div class="question-meta">
-                    <a href="{% url 'webproject:question_detail' question.id %}" class="answers-count">answers ({{ question.answers }})</a>
+                    <a href="{% url 'webproject:question_detail' question.id %}" class="answers-count">answers ({{ question.answers_count }})</a>
                     <div class="tags">
                         Tags:
                         {% for tag in question.tags.all %}

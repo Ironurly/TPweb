@@ -45,7 +45,8 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS += [
-    'webproject'
+    'webproject',
+    'users'
 ]
 
 MIDDLEWARE = [

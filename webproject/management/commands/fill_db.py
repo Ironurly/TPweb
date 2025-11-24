@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 from faker import Faker
 
-from webproject.models import UserProfile, Question, Comment, Tag, QuestionLikes, CommentLikes
+from webproject.models import UserProfile, Question, Answer, Tag, QuestionLikes, AnswerLikes
 
 class Command(BaseCommand):
     help = "Заполнение БД тестовыми данными"
@@ -19,7 +19,7 @@ class Command(BaseCommand):
         num_users = count
         num_tags = count 
         num_questions = count * 10
-        num_comments = count * 100
+        num_answers = count * 100
 
         self.stdout.write(f"Начинаем генерацию данных с базовым count={count}...")
 
@@ -69,9 +69,9 @@ class Command(BaseCommand):
             question = Question.objects.create(
                 title=fake.sentence()[:250],
                 body=fake.text(max_nb_chars=3000),
-                author_id=random.choice(users),
+                author=random.choice(users),
                 likes=0,
-                answers=0,
+                answers_count=0,
                 is_active=True
             )
             
@@ -81,21 +81,21 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS(f"Создано вопросов: {len(questions)}"))
 
-        comments = []
-        for i in range(num_comments):
+        answers = []
+        for i in range(num_answers):
             question = random.choice(questions)
-            comment = Comment.objects.create(
+            answer = Answer.objects.create(
                 title=fake.sentence()[:250],
                 body=fake.text(max_nb_chars=2000),
-                author_id=random.choice(users),
-                question_id=question,
+                author=random.choice(users),
+                question=question,
                 likes=0,
                 is_correct=fake.boolean(chance_of_getting_true=15),
                 is_active=True
             )
-            comments.append(comment)
+            answers.append(answer)
 
-        self.stdout.write(self.style.SUCCESS(f"Создано комментариев: {len(comments)}"))
+        self.stdout.write(self.style.SUCCESS(f"Создано ответов: {len(answers)}"))
 
         question_likes_created = 0
         for question in questions:
@@ -103,9 +103,13 @@ class Command(BaseCommand):
             for liker in likers:
                 try:
                     QuestionLikes.objects.create(
-                        question_id=question,
-                        user_id=liker,
-                        status=random.choice([True, False, None])
+                        question=question,
+                        user=liker,
+                        reaction = random.choice([
+                            QuestionLikes.LIKE, 
+                            QuestionLikes.DISLIKE, 
+                            QuestionLikes.NO_REACTION
+                        ])
                     )
                     question_likes_created += 1
                 except:
@@ -113,54 +117,58 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS(f"Создано лайков вопросов: {question_likes_created}"))
 
-        comment_likes_created = 0
-        for comment in comments:
+        answer_likes_created = 0
+        for answer in answers:
             likers = random.sample(users, random.randint(0, min(15, len(users))))
             for liker in likers:
                 try:
-                    CommentLikes.objects.create(
-                        comment_id=comment,
-                        user_id=liker,
-                        status=random.choice([True, False, None])
+                    AnswerLikes.objects.create(
+                        answer=answer,
+                        user=liker,
+                        reaction = random.choice([
+                            QuestionLikes.LIKE, 
+                            QuestionLikes.DISLIKE, 
+                            QuestionLikes.NO_REACTION
+                        ])
                     )
-                    comment_likes_created += 1
+                    answer_likes_created += 1
                 except:
                     pass
 
-        self.stdout.write(self.style.SUCCESS(f"Создано лайков комментариев: {comment_likes_created}"))
+        self.stdout.write(self.style.SUCCESS(f"Создано лайков комментариев: {answer_likes_created}"))
 
         self.stdout.write("Обновление счетчиков...")
         
         for question in questions:
             likes_count = QuestionLikes.objects.filter(
-                question_id=question, 
-                status=True
+                question=question, 
+                reaction=QuestionLikes.LIKE
             ).count()
             dislikes_count = QuestionLikes.objects.filter(
-                question_id=question, 
-                status=False
+                question=question, 
+                reaction=QuestionLikes.DISLIKE
             ).count()
             question.likes = likes_count - dislikes_count
             question.save()
 
-        for comment in comments:
-            likes_count = CommentLikes.objects.filter(
-                comment_id=comment, 
-                status=True
+        for answer in answers:
+            likes_count = AnswerLikes.objects.filter(
+                answer=answer, 
+                reaction=AnswerLikes.LIKE
             ).count()
-            dislikes_count = CommentLikes.objects.filter(
-                comment_id=comment, 
-                status=False
+            dislikes_count = AnswerLikes.objects.filter(
+                answer=answer, 
+                reaction=AnswerLikes.DISLIKE
             ).count()
-            comment.likes = likes_count - dislikes_count
-            comment.save()
+            answer.likes = likes_count - dislikes_count
+            answer.save()
         
         for question in questions:
-            answers_count = Comment.objects.filter(
-                question_id=question, 
+            answers_count = Answer.objects.filter(
+                question=question, 
                 is_active=True
             ).count()
-            question.answers = answers_count
+            question.answers_count = answers_count
             question.save()
 
         self.stdout.write(self.style.SUCCESS("Все данные успешно сгенерированы!"))
@@ -168,6 +176,6 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f"Пользователи: {User.objects.count()}"))
         self.stdout.write(self.style.SUCCESS(f"Теги: {Tag.objects.count()}"))
         self.stdout.write(self.style.SUCCESS(f"Вопросы: {Question.objects.count()}"))
-        self.stdout.write(self.style.SUCCESS(f"Комментарии: {Comment.objects.count()}"))
+        self.stdout.write(self.style.SUCCESS(f"Комментарии: {Answer.objects.count()}"))
         self.stdout.write(self.style.SUCCESS(f"Лайки вопросов: {QuestionLikes.objects.count()}"))
-        self.stdout.write(self.style.SUCCESS(f"Лайки комментариев: {CommentLikes.objects.count()}"))
+        self.stdout.write(self.style.SUCCESS(f"Лайки комментариев: {AnswerLikes.objects.count()}"))
