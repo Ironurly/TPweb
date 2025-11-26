@@ -14,30 +14,7 @@
             <a href ="{% url 'webproject:index_question_view' %}"class="hot-link">New Questions</a>
         {%endif%}
     </div>
-    <div>
-        {% for question in object_list %}
-        <div class="question" data-id="{{ question.id }}">
-            {% include "question_item.html" %}
-            <div class="question-right">
-                <h3 class="question-title">
-                    <a href="{% url "webproject:question_detail" question.id%}">{{ question.title }}</a>
-                </h3>
-                <p class="question-text">{{ question.body }}</p>
-                <div class="question-meta">
-                    <a href="{% url "webproject:question_detail" question.id%}" class="answers-count">answers ({{ question.answers_count }})</a>
-                    <div class="tags">
-                        Tags:
-                        {% for tag in question.tags.all %}
-                            <a href="{% url 'webproject:tag' tag_name=tag.title %}" class="tag">{{ tag.title }}</a>
-                        {% empty %}
-                            <span class="no-tags">No tags</span>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+    {% include "question_item.html" %}
     {% include "paginator.html" %}
 </div>
 {% endblock %}

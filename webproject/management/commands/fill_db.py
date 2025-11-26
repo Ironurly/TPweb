@@ -2,7 +2,7 @@ import random
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 from faker import Faker
-
+from django.db.models import Count, Q
 from webproject.models import UserProfile, Question, Answer, Tag, QuestionLikes, AnswerLikes
 
 class Command(BaseCommand):
@@ -108,7 +108,6 @@ class Command(BaseCommand):
                         reaction = random.choice([
                             QuestionLikes.LIKE, 
                             QuestionLikes.DISLIKE, 
-                            QuestionLikes.NO_REACTION
                         ])
                     )
                     question_likes_created += 1
@@ -128,7 +127,6 @@ class Command(BaseCommand):
                         reaction = random.choice([
                             QuestionLikes.LIKE, 
                             QuestionLikes.DISLIKE, 
-                            QuestionLikes.NO_REACTION
                         ])
                     )
                     answer_likes_created += 1
@@ -139,37 +137,65 @@ class Command(BaseCommand):
 
         self.stdout.write("Обновление счетчиков...")
         
-        for question in questions:
-            likes_count = QuestionLikes.objects.filter(
-                question=question, 
-                reaction=QuestionLikes.LIKE
-            ).count()
-            dislikes_count = QuestionLikes.objects.filter(
-                question=question, 
-                reaction=QuestionLikes.DISLIKE
-            ).count()
-            question.likes = likes_count - dislikes_count
-            question.save()
-
-        for answer in answers:
-            likes_count = AnswerLikes.objects.filter(
-                answer=answer, 
-                reaction=AnswerLikes.LIKE
-            ).count()
-            dislikes_count = AnswerLikes.objects.filter(
-                answer=answer, 
-                reaction=AnswerLikes.DISLIKE
-            ).count()
-            answer.likes = likes_count - dislikes_count
-            answer.save()
+        questions_to_update = []
+        question_ids = [q.id for q in questions]
+        
+        question_likes_data = QuestionLikes.objects.filter(
+            question_id__in=question_ids
+        ).values('question_id').annotate(
+            likes=Count('id', filter=Q(reaction=QuestionLikes.LIKE)),
+            dislikes=Count('id', filter=Q(reaction=QuestionLikes.DISLIKE))
+        )
+        
+        question_likes_dict = {
+            item['question_id']: item['likes'] - item['dislikes'] 
+            for item in question_likes_data
+        }
         
         for question in questions:
-            answers_count = Answer.objects.filter(
-                question=question, 
-                is_active=True
-            ).count()
-            question.answers_count = answers_count
-            question.save()
+            question.likes = question_likes_dict.get(question.id, 0)
+            questions_to_update.append(question)
+        
+        Question.objects.bulk_update(questions_to_update, ['likes'])
+    
+        answers_to_update = []
+        answer_ids = [a.id for a in answers]
+        
+        answer_likes_data = AnswerLikes.objects.filter(
+            answer_id__in=answer_ids
+        ).values('answer_id').annotate(
+            likes=Count('id', filter=Q(reaction=AnswerLikes.LIKE)),
+            dislikes=Count('id', filter=Q(reaction=AnswerLikes.DISLIKE))
+        )
+        
+        answer_likes_dict = {
+            item['answer_id']: item['likes'] - item['dislikes'] 
+            for item in answer_likes_data
+        }
+        
+        for answer in answers:
+            answer.likes = answer_likes_dict.get(answer.id, 0)
+            answers_to_update.append(answer)
+        
+        Answer.objects.bulk_update(answers_to_update, ['likes'])
+        
+        questions_for_answers_update = []
+        
+        answers_count_data = Answer.objects.filter(
+            question_id__in=question_ids,
+            is_active=True
+        ).values('question_id').annotate(count=Count('id'))
+        
+        answers_count_dict = {
+            item['question_id']: item['count'] 
+            for item in answers_count_data
+        }
+        
+        for question in questions:
+            question.answers_count = answers_count_dict.get(question.id, 0)
+            questions_for_answers_update.append(question)
+        
+        Question.objects.bulk_update(questions_for_answers_update, ['answers_count'])
 
         self.stdout.write(self.style.SUCCESS("Все данные успешно сгенерированы!"))
         self.stdout.write(self.style.SUCCESS(f"Итоговая статистика:"))

@@ -23,17 +23,24 @@
                 <div class="search">
                     <input type="text" placeholder="Search...">
                 </div>
-                
                 <div class="user-menu">
+                    {% if user.is_authenticated %}
                     <a class="btn btn-primary" href={% url "webproject:ask_question"%}>Ask Question</a>
                     <div class="user-auth">
                         <div class="avatar-small"></div>
-                        <span >Dr. Pepper</span>
+                        <span >{{ user.username }}</span>
                         <div class="dropdown">
                             <a href="{% url 'users:settings'%}">Settings</a>
-                            <a href="{% url "users:login"%}">Log out</a> 
+                            <a href="{% url "webproject:index_question_view"%}">Log out</a> 
                         </div>
                     </div>
+                    {% else %}
+                    <a class="btn btn-primary" href="{% url 'users:login' %}">Ask Question</a>
+                    <div class="user-auth">
+                        <a href="{% url 'users:login' %}" class="btn btn-outline">Log in</a>
+                        <a href="{% url 'users:signup' %}" class="btn btn-primary">Sign up</a>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -1,16 +1,14 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, DetailView
-from webproject.managers import QuestionManager, get_paginator_page
 from webproject.mixins import AsideTagsView
-from webproject.models import Question, Tag
+from webproject.models import Question, Tag, get_paginator_page
 
 class IndexQuestionView(AsideTagsView, TemplateView):
     template_name = "webproject/index.html"
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        manager = QuestionManager()
-        questions = manager.get_new_questions()
+        questions = Question.objects.get_new_questions()
         get_paginator_page(self.request, questions, context, per_page=5)
 
         context['meta'] = {
@@ -24,8 +22,7 @@ class HotQuestionView(AsideTagsView, TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        manager = QuestionManager()
-        questions = manager.get_hot_questions()
+        questions = Question.objects.get_hot_questions()
         get_paginator_page(self.request, questions, context, per_page=5)
         
         context['meta'] = {
@@ -37,10 +34,15 @@ class HotQuestionView(AsideTagsView, TemplateView):
 class QuestionDetailView(AsideTagsView, DetailView):
     template_name = "webproject/question.html"
 
-    queryset = Question.objects.filter(is_active=True)
+    model = Question
     
     def get_queryset(self):
-        return super().get_queryset().select_related('author').prefetch_related('tags')
+        return (
+            Question.objects
+            .filter(is_active=True)
+            .select_related('author')
+            .prefetch_related('tags')
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -66,10 +68,9 @@ class TagView(AsideTagsView, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        manager = QuestionManager()
         tag_name = self.kwargs.get('tag_name')
         tag = get_object_or_404(Tag, title=tag_name)
-        questions = manager.get_tagged_questions(tag.id)
+        questions = Question.objects.get_tagged_questions(tag.id)
 
         get_paginator_page(self.request, questions, context, per_page=5)
 
