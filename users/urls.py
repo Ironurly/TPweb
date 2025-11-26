@@ -5,5 +5,6 @@ app_name = "users"
 urlpatterns = [
     re_path(r'^login/$', LoginView.as_view(), name="login"),
     re_path(r'^signup/$', SignUpView.as_view(), name="signup"),
-    re_path(r'^settings/$', SettingsView.as_view(), name="settings")
+    re_path(r'^settings/$', SettingsView.as_view(), name="settings"),
+    re_path(r'^logout/$', LogOut.as_view(), name="logout")
 ]

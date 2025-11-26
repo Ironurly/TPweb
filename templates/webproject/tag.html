@@ -7,7 +7,9 @@
     <div class="page-header">
         <h1>Questions tagged [{{ tag_name }}]</h1>
     </div>
-    {% include "question_item.html" %}
+    {% for question in object_list %}
+        {% include "question_item.html" %}
+    {% endfor %}
     {% include "paginator.html" %}
 </div>
 {% endblock %}

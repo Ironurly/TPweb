@@ -14,7 +14,9 @@
             <a href ="{% url 'webproject:index_question_view' %}"class="hot-link">New Questions</a>
         {%endif%}
     </div>
-    {% include "question_item.html" %}
+    {% for question in object_list %}
+        {% include "question_item.html" %}
+    {% endfor %}
     {% include "paginator.html" %}
 </div>
 {% endblock %}

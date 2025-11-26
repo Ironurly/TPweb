@@ -31,7 +31,7 @@
                         <span >{{ user.username }}</span>
                         <div class="dropdown">
                             <a href="{% url 'users:settings'%}">Settings</a>
-                            <a href="{% url "webproject:index_question_view"%}">Log out</a> 
+                            <a href="{% url "users:logout"%}">Log out</a> 
                         </div>
                     </div>
                     {% else %}

@@ -1,8 +1,11 @@
+from django.shortcuts import redirect
+from django.views import View
 from webproject.mixins import AsideTagsView
 from django.views.generic import TemplateView
 from django.views.generic import FormView
 from users.forms import SettingsForm, SignUpForm
 from django.urls import reverse_lazy
+from django.contrib.auth import logout
 
 class LoginView(AsideTagsView, TemplateView):
     template_name = "webproject/login.html"
@@ -26,3 +29,8 @@ class SignUpView(AsideTagsView, FormView):
 
     def form_valid(self, form):
         return super().form_valid(form)
+
+class LogOut(View):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('webproject:index_question_view')
