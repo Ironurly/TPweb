@@ -79,3 +79,45 @@
     min-height: 150px;
     margin-bottom: 1rem;
 }
+
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert p {
+    margin: 0.5rem 0;
+}
+
+.alert p:first-child {
+    margin-top: 0;
+}
+
+.alert p:last-child {
+    margin-bottom: 0;
+}
+
+.answer-correct {
+    border-left: 4px solid #28a745 !important;
+    background-color: #f8fff9 !important;
+}
+
+.correct-badge {
+    color: #28a745;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.correct-badge span {
+    font-size: 0.9rem;
+}
