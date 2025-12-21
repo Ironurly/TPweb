@@ -107,7 +107,6 @@ class Question(models.Model):
         return f"#{self.id}: {self.title}"
 
 class Answer(models.Model):
-    title = models.CharField(verbose_name="Заголовок", max_length=255)
     body = models.TextField(verbose_name="Текст комментария", max_length="4000")
     
     likes = models.IntegerField(default=0)
@@ -118,12 +117,6 @@ class Answer(models.Model):
     
     question = models.ForeignKey(Question, verbose_name="Вопрос", on_delete=models.CASCADE, related_name="answers")
     is_active = models.BooleanField(verbose_name="Активно", help_text="Если True - отображается", default=True, db_index=True)
-    
-    
-    # Потом когда реализовавывать буду... от туда их вызывать буду
-    # def save(self, *args, **kwargs):
-    #     self.question.answer()
-    #     super().save(*args, **kwargs)
 
     def like(self, val):
         self.likes += val
