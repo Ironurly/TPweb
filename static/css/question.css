@@ -79,3 +79,86 @@
     min-height: 150px;
     margin-bottom: 1rem;
 }
+
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert p {
+    margin: 0.5rem 0;
+}
+
+.alert p:first-child {
+    margin-top: 0;
+}
+
+.alert p:last-child {
+    margin-bottom: 0;
+}
+
+.answer-correct {
+    border-left: 4px solid #28a745 !important;
+    background-color: #f8fff9 !important;
+}
+
+.correct-badge {
+    color: #28a745;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.correct-badge span {
+    font-size: 0.9rem;
+}
+
+/* Voting styles */
+.voting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.like-btn {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 0.25rem 0.75rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+}
+
+.like-btn:hover {
+    background: #e9ecef;
+    border-color: #adb5bd;
+}
+
+.like-btn.active {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.likes-count {
+    font-weight: bold;
+    color: #495057;
+}
+
+.mark-correct-btn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}

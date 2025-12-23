@@ -27,8 +27,12 @@
                     {% if user.is_authenticated %}
                     <a class="btn btn-primary" href={% url "webproject:ask_question"%}>Ask Question</a>
                     <div class="user-auth">
-                        <div class="avatar-small"></div>
-                        <span >{{ user.username }}</span>
+                        <div class="avatar-small">
+                            {% if user.profile.avatar %}
+                                <img src="{{ user.profile.avatar.url }}">
+                            {% endif %}
+                        </div>
+                        <span >{{ user.first_name|default:user.username }}</span>
                         <div class="dropdown">
                             <a href="{% url 'users:settings'%}">Settings</a>
                             <a href="{% url "users:logout"%}">Log out</a> 
@@ -99,4 +103,6 @@
             </div>
         </div>
 </footer>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/ajax-handlers.js' %}"></script>
 </html>

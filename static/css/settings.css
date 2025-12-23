@@ -25,6 +25,10 @@
     gap: 0.5rem;
 }
 
+.upload-controls input[type="file"] {
+    display: none;
+}
+
 .form-group {
     margin-bottom: 1.5rem;
 }
@@ -54,4 +58,29 @@
     display: flex;
     gap: 1rem;
     margin-top: 2rem;
+}
+
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert p {
+    margin: 0.5rem 0;
+}
+
+.alert p:first-child {
+    margin-top: 0;
+}
+
+.alert p:last-child {
+    margin-bottom: 0;
 }
