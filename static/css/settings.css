@@ -25,6 +25,10 @@
     gap: 0.5rem;
 }
 
+.upload-controls input[type="file"] {
+    display: none;
+}
+
 .form-group {
     margin-bottom: 1.5rem;
 }

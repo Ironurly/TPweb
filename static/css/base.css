@@ -106,19 +106,6 @@ body {
     gap: 0.25rem;
 }
 
-.like-btn {
-    background: none;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    padding: 0.25rem 0.5rem;
-    cursor: pointer;
-}
-
-.likes-count {
-    font-weight: bold;
-    color: #495057;
-}
-
 .user-auth {
     display: flex;
     align-items: center;
@@ -133,6 +120,16 @@ body {
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.2);
     border: 2px solid white;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-small img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .avatar-medium {
@@ -141,6 +138,16 @@ body {
     border-radius: 50%;
     background: linear-gradient(135deg, #667eea, #764ba2);
     border: 3px solid #e9ecef;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-medium img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .avatar-large {
@@ -149,6 +156,16 @@ body {
     border-radius: 50%;
     background: linear-gradient(135deg, #667eea, #764ba2);
     border: 4px solid #e9ecef;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .dropdown {

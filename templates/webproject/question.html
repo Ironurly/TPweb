@@ -6,11 +6,15 @@
 <div class="content">
     <div class="question-full">
         <div>
-            <div class="avatar-large"></div>
-            <div>
-                <button class="like-btn">↑</button>
+            <div class="avatar-large">
+                {% if question.author.profile.avatar %}
+                    <img src="{{ question.author.profile.avatar.url }}">
+                {% endif %}
+            </div>
+            <div class="voting">
+                <button class="like-btn question-vote-btn {% if user_question_vote == 'like' %}active{% endif %}" data-question-id="{{ question.id }}" data-vote-type="like">↑</button>
                 <span class="likes-count">{{ question.likes }}</span>
-                <button class="like-btn">↓</button>
+                <button class="like-btn question-vote-btn {% if user_question_vote == 'dislike' %}active{% endif %}" data-question-id="{{ question.id }}" data-vote-type="dislike">↓</button>
             </div>
         </div>
         <div>
@@ -36,22 +40,21 @@
         {% for answer in object_list %}
         <div class="answer {% if answer.is_correct %}answer-correct{% endif %}">
             <div class="answer-left">
-                <div class="avatar-medium"></div>
-                <div>
-                    <button class="like-btn">↑</button>
+                <div class="avatar-medium">
+                    {% if answer.author.profile.avatar %}
+                        <img src="{{ answer.author.profile.avatar.url }}">
+                    {% endif %}
+                </div>
+                <div class="voting">
+                    <button class="like-btn answer-vote-btn {% if answer.user_vote == 'like' %}active{% endif %}" data-answer-id="{{ answer.id }}" data-vote-type="like">↑</button>
                     <span class="likes-count">{{ answer.likes }}</span>
-                    <button class="like-btn">↓</button>
+                    <button class="like-btn answer-vote-btn {% if answer.user_vote == 'dislike' %}active{% endif %}" data-answer-id="{{ answer.id }}" data-vote-type="dislike">↓</button>
                 </div>
                 {% if user.is_authenticated and question.author == user %}
-                <div>
-                    <form method="POST" style="display: inline;">
-                        {% csrf_token %}
-                        <input type="hidden" name="answer_pk" value="{{ answer.id }}">
-                        <input type="checkbox" id="is_answer_correct_{{ answer.id }}" 
-                               {% if answer.is_correct %}checked{% endif %}
-                               onchange="this.form.submit()">
-                        <label for="is_answer_correct_{{ answer.id }}">Correct!</label>
-                    </form>
+                <div class="mark-correct-btn {% if answer.is_correct %}checked{% endif %}" data-answer-id="{{ answer.id }}">
+                    <input type="checkbox" id="is_answer_correct_{{ answer.id }}" 
+                           {% if answer.is_correct %}checked{% endif %}>
+                    <label for="is_answer_correct_{{ answer.id }}">Correct!</label>
                 </div>
                 {% elif answer.is_correct %}
                 <div class="correct-badge">
@@ -64,7 +67,7 @@
                     <p>{{ answer.body }}</p>
                 </div>
                 <div class="answer-meta">
-                    Answered by <strong>{{ answer.author }}</strong> on {{ answer.created_at|date:"Y-m-d" }}
+                    Answered by <strong>{{ answer.author.first_name }}</strong> on {{ answer.created_at|date:"Y-m-d" }}
                 </div>
             </div>
         </div>

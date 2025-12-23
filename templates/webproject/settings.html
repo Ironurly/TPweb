@@ -22,11 +22,14 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="avatar-upload">
-                <div class="avatar-large"></div>
+                <div class="avatar-large">
+                    {% if user.profile.avatar %}
+                        <img src="{{ user.profile.avatar.url }}">
+                    {% endif %}
+                </div>
                 <div class="upload-controls">
-                    <input type="file" name="avatar">
-                    <button type="button" class="btn btn-secondary">Upload New Avatar</button>
-                    <button type="button" class="btn btn-outline">Remove Avatar</button>
+                    <input type="file" name="avatar" id="avatar" accept="image/*">
+                    <label for="avatar" class="btn btn-secondary">Upload New Avatar</label>
                 </div>
             </div>
 
@@ -57,4 +60,26 @@
         
     </div>
 </div>
+
+<script>
+document.getElementById('avatar').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const avatarImg = document.querySelector('.avatar-large img');
+            if (avatarImg) {
+                avatarImg.src = event.target.result;
+            } else {
+                const img = document.createElement('img');
+                img.src = event.target.result;
+                img.alt = 'Avatar';
+                document.querySelector('.avatar-large').appendChild(img);
+            }
+        };
+        reader.readAsDataURL(file);
+        console.log('File selected:', file.name, file.size, 'bytes');
+    }
+});
+</script>
 {% endblock %}

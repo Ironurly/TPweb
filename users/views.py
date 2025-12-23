@@ -9,6 +9,7 @@ from users.forms import LoginForm, SettingsForm, SignUpForm
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
+from webproject.models import UserProfile
 
 class LoginView(AsideTagsView, FormView):
     template_name = "webproject/login.html"
@@ -59,6 +60,12 @@ class SettingsView(AsideTagsView, FormView):
 
     def form_valid(self, form):
         user = self.request.user
+        profile, _ = UserProfile.objects.get_or_create(user=user)
+        avatar_file = form.cleaned_data.get('avatar')
+
+        if avatar_file:
+            profile.avatar = avatar_file
+            profile.save(update_fields=['avatar'])
         
         user.email = form.cleaned_data['email']
         user.username = form.cleaned_data['email']
@@ -84,6 +91,7 @@ class SignUpView(AsideTagsView, FormView):
         email = form.cleaned_data['email']
         nickname = form.cleaned_data['nickname']
         password = form.cleaned_data['password']
+        avatar_file = form.cleaned_data.get('avatar')
         
         user = User.objects.create_user(
             username=email,
@@ -91,6 +99,11 @@ class SignUpView(AsideTagsView, FormView):
             first_name=nickname,
             password=password
         )
+        
+        profile = UserProfile.objects.create(user=user)
+        if avatar_file:
+            profile.avatar = avatar_file
+            profile.save(update_fields=['avatar'])
         
         user = auth.authenticate(
             self.request,

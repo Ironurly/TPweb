@@ -121,3 +121,44 @@
 .correct-badge span {
     font-size: 0.9rem;
 }
+
+/* Voting styles */
+.voting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.like-btn {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 0.25rem 0.75rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+}
+
+.like-btn:hover {
+    background: #e9ecef;
+    border-color: #adb5bd;
+}
+
+.like-btn.active {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.likes-count {
+    font-weight: bold;
+    color: #495057;
+}
+
+.mark-correct-btn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}

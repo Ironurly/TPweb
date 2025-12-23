@@ -8,6 +8,7 @@ class LoginForm(forms.Form):
 class SettingsForm(forms.Form):
     email = forms.EmailField(required=True)
     nickname = forms.CharField(required=True, min_length=3)
+    avatar = forms.ImageField(required=False)
     password = forms.CharField(required=False, min_length=8, widget=forms.PasswordInput)
     password_r = forms.CharField(required=False, widget=forms.PasswordInput)
 
@@ -35,6 +36,7 @@ class SettingsForm(forms.Form):
 class SignUpForm(forms.Form):
     email = forms.EmailField(required=True)
     nickname = forms.CharField(required=True, min_length=3)
+    avatar = forms.ImageField(required=False)
     password = forms.CharField(required=True, min_length=8, widget=forms.PasswordInput)
     password_r = forms.CharField(required=True, widget=forms.PasswordInput)
 

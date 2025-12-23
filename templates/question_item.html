@@ -1,10 +1,14 @@
 <div class="question">
     <div class="question-left">
-        <div class="avatar-medium"></div>
-        <div>
-            <button class="like-btn">↑</button>
+        <div class="avatar-medium">
+            {% if question.author.profile.avatar %}
+                <img src="{{ question.author.profile.avatar.url }}">
+            {% endif %}
+        </div>
+        <div class="voting">
+            <button class="like-btn question-vote-btn {% if question.user_vote == 'like' %}active{% endif %}" data-question-id="{{ question.id }}" data-vote-type="like">↑</button>
             <span class="likes-count">{{ question.likes }}</span>
-            <button class="like-btn">↓</button>
+            <button class="like-btn question-vote-btn {% if question.user_vote == 'dislike' %}active{% endif %}" data-question-id="{{ question.id }}" data-vote-type="dislike">↓</button>
         </div>
     </div>
     <div class="question-right">

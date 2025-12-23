@@ -64,10 +64,10 @@ class Tag(models.Model):
         return self.title
 
 class UserProfile(models.Model):
-    avatar = models.CharField(verbose_name="Аватар пользователя", max_length=255, blank=True, null=True)
-    bio = models.TextField(verbose_name="Описание", max_length=4000)
+    avatar = models.ImageField(verbose_name="Аватар пользователя", upload_to='avatars/', blank=True, null=True)
+    bio = models.TextField(verbose_name="Описание", max_length=4000, blank=True)
     
-    user = models.OneToOneField(User, verbose_name="Пользователь", on_delete=models.CASCADE)
+    user = models.OneToOneField(User, verbose_name="Пользователь", on_delete=models.CASCADE, related_name='profile')
     class Meta:
         verbose_name = 'Профиль пользователя'
         verbose_name_plural = 'Профиль пользователей'
