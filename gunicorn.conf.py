@@ -1,0 +1,9 @@
+bind = "127.0.0.1:8000"
+workers = 2
+worker_class = "sync"
+wsgi_app = "tpwebproject.wsgi:application"
+accesslog = "-"
+errorlog = "-"
+loglevel = "info"
+daemon = False
+timeout = 30

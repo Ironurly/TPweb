@@ -30,7 +30,15 @@ DEBUG = config.getboolean("common", "DEBUG", fallback=False)
 SECRET_KEY = config.get("secret", "SECRET_KEY", fallback="!secret_key!")
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8080",
+    "http://127.0.0.1:8080",
+]
 
 
 # Application definition
@@ -73,6 +81,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -135,6 +144,10 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR/"static"]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Media files (User uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
